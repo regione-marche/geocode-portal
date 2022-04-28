@@ -5,13 +5,14 @@
     ViewBag.Title = "Index";
 }
 <head>
-  
+
     <!-- stylesheet of Bootstrap-->
     <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
     <!--Leaflet's CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin="" />
+
     <!-- Make sure you put this AFTER Leaflet's CSS,    JS Leaflet -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -116,7 +117,7 @@
         #Seleziona{
             width:100%;
         }
-        
+
 </style>
 
 
@@ -134,12 +135,12 @@
 @using (Html.BeginForm())
 {
 
-<br />
-<div class="row">
-    <div class="col-md-12">
-        <button type="button" class="btn btn-outline-secondary" id="Seleziona" disabled><i class="fas fa-flag"></i>  Visualizza Dati in Mappa</button>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-outline-secondary" id="Seleziona"><i class="fas fa-flag"></i>  Visualizza Dati in Mappa</button>
+        </div>
     </div>
-</div>
 
 
     <div>
@@ -147,7 +148,7 @@
         <div id="mapid"></div>
     </div>
     <br />
-    <strong>@Html.ActionLink("Aggiungi nuovo luogo", "Create", new { @class = "MenuButtons" })</strong>
+ @*   <strong>@Html.ActionLink("Aggiungi nuovo luogo", "Create", new { @class = "MenuButtons" })</strong>*@
     <br />
     <br />
     <div id="filter" visible="true" style="display:block">
@@ -170,27 +171,27 @@
                 </div>
             </div>
         </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        Descrizione File:
-                        @Html.DropDownList("DescrizioneFile", ViewBag.DescrizioneFile as SelectList, "Seleziona un file", htmlAttributes: new { @class = "dropdown", @id = "DescrizioneFile" })
-                    </div>
-                </div>
-               
+        <div class="row">
+            <div class="col-md-4">
+                Descrizione File:
+                @Html.DropDownList("DescrizioneFile", ViewBag.DescrizioneFile as SelectList, "Seleziona un file", htmlAttributes: new { @class = "dropdown", @id = "DescrizioneFile" })
+            </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-md-3 mt-3">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="submit" id="cerca">
-                                <i class="fas fa-search" aria-label="Cerca"></i>
-                            </button>
-                            <button type="button" value="Estrai" class="btn btn-success" id="esporta"><i class="fas fa-download" style="color:mintcream"></i> Estrai</button>
 
-                        </div>
-                    </div>
+        <div class="row">
+            <div class="col-md-3 mt-3">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit" id="cerca">
+                        <i class="fas fa-search" aria-label="Cerca"></i>
+                    </button>
+                    <button type="button" value="Estrai" class="btn btn-success" id="esporta"><i class="fas fa-download" style="color:mintcream"></i> Estrai</button>
+
                 </div>
-           
-        
+            </div>
+        </div>
+
+
     </div>
 
 }
@@ -198,7 +199,7 @@
 
 <div id="table-wrapper">
     <div id="table-scroll">
-        <table class="table">
+        <table class="table" id="Table">
             <thead>
                 <tr>
                     <th>
@@ -240,9 +241,9 @@
                     <th>
                         Here_Error
                     </th>
+                    <th id="colonnautile"><i class="fa fa-key"></i></th>
 
 
-                    <th id="bloccacolonnautile"></th>
                 </tr>
             </thead>
             <tbody>
@@ -310,20 +311,22 @@
         </table>
     </div>
 </div>
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+          
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-new
-{
-        page,
-        Provincia = ViewBag.CurrentProvincia,
-         Comune = ViewBag.CurrentComune,
-         Indirizzo = ViewBag.CurrentIndirizzo,
-        DescrizioneFile = ViewBag.CurrentDescrizioneFile,
+@* @Html.PagedListPager(Model, page => Url.Action("Index",
+    new
+    {
+        //    page,
+            Provincia = ViewBag.CurrentProvincia,
+             Comune = ViewBag.CurrentComune,
+             Indirizzo = ViewBag.CurrentIndirizzo,
+            DescrizioneFile = ViewBag.CurrentDescrizioneFile,
 
-}))
-
+    }))
+*@
 
 
 
@@ -336,6 +339,23 @@ new
         }).addTo(mymap);
 
     $(document).ready(function () {
+
+        $('#Table').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Italian.json'
+            },
+
+            paging: true,
+            scrollX: true,
+            scrollCollapse: true,
+            responsive: true,            
+            fixedHeader: {
+                header: true,
+                
+            },
+            fixedColumns: { right: 1 }
+
+        });
 
         const val = $("#RicercaMappa").val();
         console.log(val);
@@ -400,7 +420,7 @@ new
             url: "ValoreExport/GeoDati",
             data: { 'Name_File': Nome_File },
             success: function (data) {
-                
+
                     $.ajax({
                         //definisco il tipo della chiamata
                         type: "POST",
@@ -417,8 +437,8 @@ new
                             var layerGroup_GeoDati = L.layerGroup().addTo(mymap);
                             for (var i in data) {
                                 var marker = L.marker([data[i].Lat.replace(",", "."), data[i].Lon.replace(",", ".")])
-                                marker.bindPopup("<b>Indirizzo: </b>" + data[i].Indirizzo + (data[i].hasOwnProperty('DENOMINAZIONE') && data[i].DENOMINAZIONE ? "<br /><b>Denominazione: </b>" + data[i].DENOMINAZIONE : "") +
-                                    "<br /><b>Info: </b>" + data[i].Descrizione);
+                                marker.bindPopup((data[i].hasOwnProperty('Indirizzo') && data[i].Indirizzo ? "<br /><b>Indirizzo: </b>" + data[i].Indirizzo : "") + (data[i].hasOwnProperty('Descrizione') && data[i].Descrizione ? "<br /><b>Descrizione: </b>" + data[i].Descrizione : ""))
+                                  //+  "<br /><b>Info: </b>" + data[i].Descrizione);
                                 layerGroup_GeoDati.addLayer(marker);
                             }
                             layerControl_GeoDati.addOverlay(layerGroup_GeoDati, Nome_File);
@@ -430,7 +450,7 @@ new
                             alert("Chiamata fallita!!!");
                         }
                     });
-                
+
             }
         });
         $('#EliminaMarker').click(function () {
@@ -446,7 +466,7 @@ new
         var Nome_File = $('#DescrizioneFile').find(":selected").text();
         console.log(Nome_File);
         if (Nome_File != "Seleziona un file") {
-           
+
             //     var Nome_File = $('#DescrizioneFile :selected').text();
             console.log(Nome_File);
             $.ajax({
@@ -454,15 +474,15 @@ new
                 type: "POST",
                 url: "ValoreExport/GeoDati",
                 data: { 'Name_File': Nome_File },
-                success: function (data) {                         
+                success: function (data) {
                         indirizzo = '@Url.Action("Estrai", "GeoDati")';
                         window.location.href = (indirizzo);
-                       
+
                 },
                     error: function () {
                         alert("Chiamata fallita!!!");
                 }
-              
+
           });
         }
         else alert("Seleziona un File")

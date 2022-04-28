@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -40,9 +41,10 @@ namespace NuovoPortaleGeo.Controllers
             ViewBag.CurrentComune = Comune;
             ViewBag.CurrentIndirizzo = Indirizzo;
             ViewBag.CurrentDescrizione = Descrizione;
-            var cf = Session["CF"].ToString();
+            var IdUtente = User.Identity.Name;      
+    //        var cf = Session["CF"].ToString();
             var Geo_Utente = db.Geo_Utente
-                    .Where(x => x.CodiceFiscale == cf).FirstOrDefault();
+                    .Where(x => x.UserName == IdUtente).FirstOrDefault();
                   
             ViewBag.DescrizioneFile = new SelectList(db.Geo_Dati.Where(s => s.IdUtente == Geo_Utente.Id).GroupBy(p => new { p.DescrizioneFile })
                                                      .Select(g => g.FirstOrDefault()), "DescrizioneFile", "DescrizioneFile");
@@ -97,13 +99,16 @@ namespace NuovoPortaleGeo.Controllers
                     break;
             }
 
-            int pageSize = 100;
+                        int pageSize = 100;
 
-            int pageNumber = (page ?? 1);
-         //   _File = null;
-            
-          
+                int pageNumber = (page ?? 1);
+            //   _File = null;
+              
+        
+           
+
             return View(geodati.ToPagedList(pageNumber,pageSize));
+            //return View(geodati);
         }
 
         // GET: geo_Dati/Details/5
@@ -326,7 +331,10 @@ namespace NuovoPortaleGeo.Controllers
                         Id = x.Id,
                         Indirizzo = x.Indirizzo,                      
                         Comune = x.Comune,
-                        Provincia = x.Provincia,                                         
+                        Provincia = x.Provincia,
+                        AltroIndirizzo=x.AltroIndirizzo,
+                        approx01=x.Approx01,
+                        approx02=x.Approx02,
                         Lat = x.Lat,
                         Lon = x.Lon,
                         Descrizione=x.Descrizione
