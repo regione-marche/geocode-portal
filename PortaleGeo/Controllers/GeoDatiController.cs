@@ -99,16 +99,16 @@ namespace NuovoPortaleGeo.Controllers
                     break;
             }
 
-                        int pageSize = 100;
+            int pageSize = 100;
 
                 int pageNumber = (page ?? 1);
-            //   _File = null;
+         //     _File = null;
               
         
-           
-
+            
+            
             return View(geodati.ToPagedList(pageNumber,pageSize));
-            //return View(geodati);
+          //  return View(geodati);
         }
 
         // GET: geo_Dati/Details/5
@@ -172,7 +172,7 @@ namespace NuovoPortaleGeo.Controllers
         // Per altri dettagli, vedere https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdUtente,DescrizioneFile,Provincia,Comune,Indirizzo,Descrizione")] Geo_Dati geo_Dati)
+        public ActionResult Edit([Bind(Include = "Id,IdUtente,DescrizioneFile,Provincia,Comune,Indirizzo,AltroIndirizzo,Descrizione,Cap,Approx01,Approx02,Lat,Lon,OpenStreetMap,Here,Google,Here_MatchLevel,Here_MatchType,Here_Relevance,Here_Error")] Geo_Dati geo_Dati)
         {
             if (ModelState.IsValid)
             {

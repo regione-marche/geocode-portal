@@ -1,4 +1,5 @@
 ﻿@model PagedList.IPagedList<NuovoPortaleGeo.Models.Geo_Dati>
+
 @using PagedList.Mvc
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
@@ -194,8 +195,8 @@
 
     </div>
 
-}
 
+}
 
 <div id="table-wrapper">
     <div id="table-scroll">
@@ -247,6 +248,7 @@
                 </tr>
             </thead>
             <tbody>
+                
                 @foreach (var item in Model)
                 {
 
@@ -313,20 +315,19 @@
 </div>
 
           
-@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-
-@* @Html.PagedListPager(Model, page => Url.Action("Index",
+ @Html.PagedListPager(Model, page => Url.Action("Index",
     new
     {
-        //    page,
+            page,
             Provincia = ViewBag.CurrentProvincia,
              Comune = ViewBag.CurrentComune,
              Indirizzo = ViewBag.CurrentIndirizzo,
             DescrizioneFile = ViewBag.CurrentDescrizioneFile,
 
     }))
-*@
+
 
 
 
@@ -344,8 +345,8 @@
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.10.15/i18n/Italian.json'
             },
-
-            paging: true,
+       
+            
             scrollX: true,
             scrollCollapse: true,
             responsive: true,            

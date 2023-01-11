@@ -193,8 +193,9 @@
                 <strong>@Html.Label("Descrizione File:", htmlAttributes: new { @class = "control-label col-md-2" })</strong>
                 <div class="row col-12">
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.DescrizioneFile, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "DescrizioneFile" } })
-                        @Html.ValidationMessageFor(model => model.DescrizioneFile, "", new { @class = "text-danger" })
+                        <input type="text" class="form-control" disabled id="DescrizioneFile"/>
+                        @*@Html.EditorFor(model => model.DescrizioneFile, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "DescrizioneFile" } })
+                        @Html.ValidationMessageFor(model => model.DescrizioneFile, "", new { @class = "text-danger" })*@
                     </div>
                 </div>
             </div>

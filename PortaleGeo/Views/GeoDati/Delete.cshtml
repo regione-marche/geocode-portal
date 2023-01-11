@@ -4,11 +4,11 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Elimina</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Sei sicuro di voler eliminare il dato definitivamente?</h3>
 <div>
-    <h4>GeoDati</h4>
+    <h5 style="color:orange">Geo Dati</h5>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -63,10 +63,11 @@
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
+        <br />
+        <br />
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Elimina" class="btn btn-danger" /> |
+            <strong> @Html.ActionLink("Torna alla lista", "Index")</strong>  
         </div>
     }
 </div>

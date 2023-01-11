@@ -105,7 +105,7 @@ namespace NuovoPortaleGeo.Controllers
                     geo = GeocodeProcessor.EsecuteGecoding(geo, GeoNoRighe);
                 }
                 //salvataggio nel db
-                uploadDB(geo, FileName, SistemaGeo);
+                uploadDB(geo,dati.IdUtente, FileName, SistemaGeo);
           //      datasavedb(dtdatabase);
                
                 
@@ -128,9 +128,10 @@ namespace NuovoPortaleGeo.Controllers
 
 
             
-        public void uploadDB(GeoCode geo,string FileName,string SistemaGeo)
+        public void uploadDB(GeoCode geo,string idutente,string FileName,string SistemaGeo)
         {
             Geo_Dati dati = new Geo_Dati();
+            dati.IdUtente = idutente;
             dati.DescrizioneFile = FileName;
             dati.Provincia = geo.Provincia;
             dati.Comune = geo.Comune;
